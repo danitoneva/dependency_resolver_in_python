@@ -1,0 +1,6 @@
+if defined PYTHONPATH set _OLD_PYTHONPATH=%PYTHONPATH%
+
+set PYTHONPATH=%CD%;%CD%\src;%CD%\tests;%_OLD_PYTHONPATH%
+
+set _OLD_PYTHONPATH=
+ 
