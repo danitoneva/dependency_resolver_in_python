@@ -2,27 +2,28 @@
 import json 
 
 
-class DependencyResolver:
-    """This class if for the correct installation of the packages."""
-    @staticmethod
-    def load_data():
-        with open('package.json', 'r') as file:
-            data = json.load(file)
-        return data
+def load_data(file_path):
+    with open(file_path, 'r', encoding = 'utf-8') as file:
+        data = json.load(file)
+    return data
+
+def filter_data():
+    data = load_data('package.json')
+    transformed = {data['name']: data['requires']}
+    return transformed 
     
-    def dfs_graph(node, graph, visited, result):
-        if node in visited:
-            return 
-        visited.add(node)
-
-        for dependency in reversed(graph.get(node, [])):
-            DependencyResolver.dfs_graph(dependency, graph, visited, result)
-        result.append(node)
-
-    def resolve(start_node):
-        graph = DependencyResolver.load_data()
+def dfs_graph(graph, start, visited = None):
+    if visited is None:
         visited = set()
-        result = []
 
-        DependencyResolver.dfs_graph(start_node, graph, visited, result)
-        return result
+    visited.add(start)
+
+    for dependency in reversed(graph.get(start, [])):
+        if dependency not in visited:
+            dfs_graph(graph, dependency, visited)    
+    
+    return visited     
+
+def resolve(start_node):
+    graph = filter_data()
+    return dfs_graph(graph, start_node)
