@@ -1,6 +1,6 @@
 """Tests for dependency resolver."""
 import pytest
-from src.dependency_resolver import resolve
+from  src.dependency_resolver import resolve
 
 
 class TestDependencyResolver():
@@ -14,7 +14,7 @@ class TestDependencyResolver():
         expected = ["F", "B"]
         result = resolve("B")
         assert expected == result
-    
+
     def test_dependency_resolver_C(self):
         expected = ["F", "B", "E", "G", "D", "F", "B", "G", "C"]
         result = resolve("C")
@@ -51,4 +51,4 @@ class TestDependencyResolver():
         assert expected == result
 
 if __name__ == '__main__':
-   pytest.main()
+    pytest.main()
